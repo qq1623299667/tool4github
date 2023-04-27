@@ -1,0 +1,13 @@
+db1	t_alarm_flow_event	create_time	program1	rd4
+db1	t_deliver_record	create_time	program1	rd4
+db1	t_alarmlog_detail	create_time	program1	rd4
+db1	t_alarmlog	creat_time	program1	rd4
+db1	t_log_alarm_push	push_time	program1	rd4
+xxl_job	xxl_job_log	handle_time	program1	rd4
+db2	base_sys_config	create_time	program2	test
+db2	base_sys_config	update_time	program2	test
+db2	detect_record	create_time	program2	dev
+db2	product_detect_result	create_time	program2	dev
+db2	product_device_state_record	create_time	program2	dev
+db2	user_info	last_login_time	program2	dev
+db2	doctor_account	last_login_time	program2	dev

@@ -1,0 +1,3 @@
+get_device_info	db1	select * from t_deviceinfo td where 1=1 and product_key = '{product_key}' and device_name = '{device_name}'
+get_device_list	db1	select * from t_deviceinfo td where 1=1 limit 10
+get_latest_time	db1	select {time_column} from {table} order by {time_column} desc limit 1
