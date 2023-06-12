@@ -1,0 +1,3 @@
+# \t切割，代表的内容依次是
+# 序号 环境别名 项目:环境 uri token 接口配置地址，序号不可重复，示例
+5	本地dev环境	local:dev	http://10.10.1.101:10005/api	{"token":"-4T8aad72ef9c9f9417ec934249aa1d7ff61","Accept-Language":"zh"}	tp01_local.txt1

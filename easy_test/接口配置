@@ -1,0 +1,11 @@
+# 表示注释，用\t 也就是tab键切割，依次是请求类型 接口名称 uri 参数 返回值断言。请求暂时只支持post/get请求，断言支持多个key，暂不支持多层级
+# 可用自定义接口文本后缀，比如txt1，然后用yml打开，就可用看到很好用的注释了
+# 可以换行，换行不要填写内容，示例如下
+# 查询用户列表：用户名查询
+post	查询用户列表	/sys/user/queryPage	{"pageIndex":1,"pageSize":10,"queryValue":"测试医生","type":1}	{"code":0}
+
+# 查询用户列表：工号查询
+post	查询用户列表	/sys/user/queryPage	{"pageIndex":1,"pageSize":10,"queryValue":"111","type":3}	{"code":0}
+
+# 查询主界面
+get	查询主页面	/sys/menu/home/page/query	params={}	{"code":0}
