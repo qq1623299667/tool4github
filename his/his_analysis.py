@@ -5,9 +5,9 @@ class BizException(Exception):
     pass
 
 
-def assert_key_not_repeat(his_map):
+def assert_key_not_repeat(his_model):
     list1 = []
-    with open(his_map, encoding='utf-8') as f:
+    with open(his_model, encoding='utf-8') as f:
         my_dict = json.load(f)
         for key in my_dict.keys():
             if key != 'config':
@@ -105,13 +105,13 @@ def his_analysis2(his_map_dict, his_txt):
     return his_map_dict
 
 
-def his_analysis(his_txt, his_map, his_json_file):
+def his_analysis(his_txt, his_model, his_json):
     # 校验所有名称全局唯一
-    his_map_dict = assert_key_not_repeat(his_map)
+    his_map_dict = assert_key_not_repeat(his_model)
     # 解析具体值
     his_map_dict = his_analysis2(his_map_dict, his_txt)
     # 输出成json
-    with open(his_json_file, "w", encoding='utf-8') as file:
+    with open(his_json, "w", encoding='utf-8') as file:
         json.dump(his_map_dict, file, indent=4, ensure_ascii=False)
 
 
@@ -125,7 +125,7 @@ def his_analysis(his_txt, his_map, his_json_file):
 # 保证每个字段全局唯一
 # 没有的话就是空，会去掉原始所有value
 if __name__ == '__main__':
-    his_txt1 = "test_his1.txt"
-    his_map1 = "source_map1.json"
-    his_json_file1 = "test_his1.json"
-    his_analysis(his_txt1, his_map1, his_json_file1)
+    his_txt1 = "his_data1.txt"
+    his_model1 = "his_model1.json"
+    his_json1 = "his_data1.json"
+    his_analysis(his_txt1, his_model1, his_json1)
