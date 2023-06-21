@@ -22,7 +22,7 @@ def txt2pd(file, split_str='\t'):
 
 
 def choose_env():
-    env_df = txt2pd('env.txt')
+    env_df = txt2pd('env.txt1')
     str1 = '请选择环境:\n'
     for i in range(len(env_df)):
         key = env_df.iloc[i, 0]
