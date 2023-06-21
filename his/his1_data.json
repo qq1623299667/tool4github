@@ -1,0 +1,27 @@
+{
+    "MSH": {
+        "createTime": "199811201300-0800",
+        "messageType": "RSP",
+        "messageType2": "Z88",
+        "messageType3": "RSP_Z88"
+    },
+    "MSA": {},
+    "QAK": {},
+    "QPD": {},
+    "PID": {},
+    "ORC": [
+        {
+            "orcType": "RE",
+            "ocrId": "99",
+            "ocrState": "Assigned"
+        },
+        {
+            "orcType": "RE",
+            "ocrId": "88",
+            "ocrState": "PRIMARY"
+        }
+    ],
+    "RXE": {},
+    "RXD": [],
+    "RXR": []
+}
