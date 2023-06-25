@@ -133,6 +133,13 @@ def his_datagram_analysis(txt_file, model_file, json_file):
         print('解析his报文成功', json_file)
 
 
+# msh 补偿
+def msh_compensation(txt):
+    if txt.startswith("MSH"):
+        txt = insert_value(txt, '1', r'^~\&')
+    return txt
+
+
 # 将json转换为his文本
 def create_his_txt(model, his_json_file):
     with open(his_json_file, encoding='utf-8') as f:
@@ -150,6 +157,8 @@ def create_his_txt(model, his_json_file):
             if not his_json_data:
                 # 先生成一个空的数据
                 txt = message_type_key + create_empty_message_txt(message_txt_length) + '\n'
+                # msh 补偿
+                txt = msh_compensation(txt)
                 his_txt = his_txt + txt
             elif message_type_key in list1:
                 for item in his_json_data:
@@ -165,6 +174,8 @@ def create_his_txt(model, his_json_file):
             else:
                 # 先生成一个空的数据
                 txt = message_type_key + create_empty_message_txt(message_txt_length) + '\n'
+                # msh 补偿
+                txt = msh_compensation(txt)
                 # 插入数据
                 model_item = message_type[message_type_key]
                 for model_item_key in model_item.keys():
@@ -178,7 +189,7 @@ def create_his_txt(model, his_json_file):
 # 将值value插入到txt的value_loc位置
 def insert_value(txt, value_loc, value):
     # 先去掉\n，然后再补回来
-    txt = txt[:len(txt)-1]
+    txt = txt[:len(txt) - 1]
     if txt:
         split = txt.split('|')
         # 单个值的插入方法
