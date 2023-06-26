@@ -1,9 +1,23 @@
-#### 通用his解析  
-##### 2023年6月21日 his通用解析及报文生成：只使用常规his操作，非常规的不能支持，还是需要独立开发
-- 通过一个model.json，可以将任意的data.txt转换为data.json
-- 通过一个model.json，可以将任意的data.json转换为data.txt
-##### model.json几个字段介绍
-- messageType：对应的每个消息头里面包含的哪些字段，需要保证每个字段全局唯一
-- filed：定义字段的注释，类型（暂未实现类型的转换，默认生成json全部都是str类型，请按需进行二次开发）
+#### Universal HIS parsing  
+##### HIS general parsing and packet generation: Only conventional HIS operations are used, and unconventional ones cannot be supported, or independent development is required
+- With a model.json, you can convert arbitrary data.txt to data.json
+- With a model.json, you can convert arbitrary data.json to a data.txt
+##### Model.json is described in several fields
+- messageType：The corresponding fields contained in each message header need to ensure that each field is globally unique
+- filed：定义字段的注释
 - messageTypeOrderAndLength：通过data.json生成data.txt的时候，指定好请求头的顺序以及需要生成的数据长度
-- list：data.txt里面出现多个请求头的需要填入
+- list：Data.txt multiple request headers need to be filled in
+#### his_model：Easy to transfer Excel and model
+After the initial HIS protocol is finalized, such an excel table can be obtained  
+
+| 字段        | 注释   | 消息头 | 位置  |
+|-----------|------|-----|-----|
+| id        | 病人id | PV1 | 7   |
+| firstName | 姓    | PID | 5.1 |
+| lastName  | 名    | PID | 5.0 |
+| gender    | 性别   | DG1 | 8   |
+| age       | 年龄   | PID | 6.0 |
+
+This table can be converted to the corresponding model.json through his_model.py script  
+You can also translate existing model.json for readability  
+After getting model.json, you can arbitrarily convert his message to json, or convert json to packet  

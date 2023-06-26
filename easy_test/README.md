@@ -1,2 +1,2 @@
-#### 简易单元测试  
-配置好环境和接口即可实现简易自动化测试，方便快速简单编写不怎么复杂的单元测试用例，短时间内最大程度的保证服务整体业务级别的可用  
+#### Simple unit testing  
+Simple automated testing can be achieved by configuring the environment and interfaces, which is convenient for quickly and simply writing unit test cases that are not so complicated, and ensuring the availability of the overall service level to the greatest extent in a short period of time  
