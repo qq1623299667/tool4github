@@ -95,7 +95,7 @@ def his_analysis2(model, txt_file):
 
 # 解析单行数据
 def analysis_single_row(message_type_item, row):
-    fields = row.split('|')
+    fields = row.replace('\n','').split('|')
     row_dict = {}
     for key in message_type_item.keys():
         value = message_type_item[key]
@@ -223,7 +223,7 @@ def insert_value(txt, value_loc, value):
                         max_length = loc2 + 1
                     for i2 in range(max_length):
                         if i2 == loc2:
-                            value2 = value2 + value
+                            value2 = value2 + str(value)
                         else:
                             if i2 < field_length:
                                 value2 = value2 + value_i_split[i2]
@@ -256,7 +256,7 @@ def his_datagram_create(his_txt_file, his_model_file, his_json_file):
 # 通过一个model.json，可以将任意的data.json转换为data.txt
 # model.json几个字段介绍
 # messageType：对应的每个消息头里面包含的哪些字段，需要保证每个字段全局唯一
-# filed：定义字段的注释，类型（暂未实现类型的转换，默认生成json全部都是str类型，请按需进行二次开发）
+# filed：定义字段及注释
 # messageTypeOrderAndLength：通过data.json生成data.txt的时候，指定好请求头的顺序以及需要生成的数据长度
 # list：data.txt里面出现多个请求头的需要填入
 if __name__ == '__main__':
