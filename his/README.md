@@ -4,8 +4,8 @@
 - With a model.json, you can convert arbitrary data.json to a data.txt
 ##### Model.json is described in several fields
 - messageType：The corresponding fields contained in each message header need to ensure that each field is globally unique
-- filed：定义字段的注释
-- messageTypeOrderAndLength：通过data.json生成data.txt的时候，指定好请求头的顺序以及需要生成的数据长度
+- filed: Define the comments for the field
+- messageTypeOrderAndLength: When generating a data .txt through data.json, specify the order of the request headers and the length of the data to be generated
 - list：Data.txt multiple request headers need to be filled in
 #### his_model：Easy to transfer Excel and model
 After the initial HIS protocol is finalized, such an excel table can be obtained  
