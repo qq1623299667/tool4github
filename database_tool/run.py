@@ -96,6 +96,13 @@ def generate_value(value):
         fake = Faker('zh_CN')
         last_name = f'"{fake.last_name()}"'
         return last_name
+    elif value.startswith("kana"):
+        fake = Faker('ja_JP')
+        # 将自定义提供者添加到 Faker 实例
+        fake.add_provider(KatakanaProvider)
+
+        kana = f'"{fake.katakana(2)}"'
+        return kana
     else:
         return None
 
@@ -143,6 +150,43 @@ def insert_data():
         # 发生异常时回滚事务
         conn.rollback()
         print("插入失败:", e)
+
+
+class KatakanaProvider:
+    katakana_chars = [
+        'ア', 'イ', 'ウ', 'エ', 'オ',
+        'カ', 'キ', 'ク', 'ケ', 'コ',
+        'サ', 'シ', 'ス', 'セ', 'ソ',
+        'タ', 'チ', 'ツ', 'テ', 'ト',
+        'ナ', 'ニ', 'ヌ', 'ネ', 'ノ',
+        'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
+        'マ', 'ミ', 'ム', 'メ', 'モ',
+        'ヤ', 'ユ', 'ヨ',
+        'ラ', 'リ', 'ル', 'レ', 'ロ',
+        'ワ', 'ヲ', 'ン',
+        'ガ', 'ギ', 'グ', 'ゲ', 'ゴ',
+        'ザ', 'ジ', 'ズ', 'ゼ', 'ゾ',
+        'ダ', 'ヂ', 'ヅ', 'デ', 'ド',
+        'バ', 'ビ', 'ブ', 'ベ', 'ボ',
+        'パ', 'ピ', 'プ', 'ペ', 'ポ',
+        'キャ', 'キュ', 'キョ',
+        'シャ', 'シュ', 'ショ',
+        'チャ', 'チュ', 'チョ',
+        'ニャ', 'ニュ', 'ニョ',
+        'ヒャ', 'ヒュ', 'ヒョ',
+        'ミャ', 'ミュ', 'ミョ',
+        'リャ', 'リュ', 'リョ',
+        'ギャ', 'ギュ', 'ギョ',
+        'ジャ', 'ジュ', 'ジョ',
+        'ビャ', 'ビュ', 'ビョ',
+        'ピャ', 'ピュ', 'ピョ'
+    ]
+
+    def __init__(self, generator):
+        self.generator = generator
+
+    def katakana(self, length=5):
+        return ''.join(random.choices(self.katakana_chars, k=length))
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ mysql:
     username: root
     password: root
     db: gn_business_db
-    count: 200
+    count: 100
     table: staff
     column:
       staff_no: rand_int
@@ -13,5 +13,7 @@ mysql:
       branch_code: enum['111','222']
       staff_last_name: last_name
       staff_first_name: first_name
-      manager_code: enum['TAN001','TAN001']
+      staff_last_kana: kana
+      staff_first_kana: kana
+      manager_code: enum['TAN001']
       is_deleted: enum[0]
