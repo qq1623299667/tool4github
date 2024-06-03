@@ -19,9 +19,12 @@
   - mysql.datasource.column：下面的全部都是表的字段，字段必须在表中存在
   - mysql.datasource.column.is_deleted：表字段名，字段必须在表中存在
 - **语法说明:随机值**
-  - enum: 枚举，后面是一个列表，有字符串类型和数字类型。不带引号就是数字类型，带引号就是字符串类型。
+  - enum: 枚举，后面是一个列表，有字符串类型和数字类型。不带引号就是数字类型，带引号就是字符串类型。比如：enum['A1','A2','A3','B1','B2']
   - first_name: 名
   - last_name: 姓
   - rand_int: 随机数字
+  - kana: 片假名
+  - email: 邮箱
+  - rand_str: 随机字符串
 
 

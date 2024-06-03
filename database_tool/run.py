@@ -1,4 +1,5 @@
 import random
+import string
 
 import pymysql
 import yaml
@@ -88,6 +89,10 @@ def generate_value(value):
         return random_option
     elif value.startswith("rand_int"):
         return random.randint(0, 100000)
+    elif value.startswith("rand_str"):
+        letters_and_digits = string.ascii_letters + string.digits
+        str1 = ''.join(random.choice(letters_and_digits) for _ in range(random.randint(1, 10)))
+        return f'"{str1}"'
     elif value.startswith("first_name"):
         fake = Faker('zh_CN')
         first_name = f'"{fake.first_name()}"'
@@ -103,6 +108,10 @@ def generate_value(value):
 
         kana = f'"{fake.katakana(2)}"'
         return kana
+    elif value.startswith("email"):
+        fake = Faker()
+        email = f'"{fake.email()}"'
+        return email
     else:
         return None
 
@@ -131,6 +140,7 @@ def generate_sql(column_keys, column):
         result += f" {fake_value}, "
     result = result.rstrip(", ")
     result += ")"
+    print(result)
     return result
 
 
