@@ -1,0 +1,4 @@
+post	職員リストを取得する	/api/staff/list	{"pageNo":1,"pageSize":10,"searchReq":{"range":0,"keyword":"","branchCode":""}}	{"code":0}
+get	職員リストを取得する	/api/staff/info/1/myTest	{"pageNo":1,"pageSize":10,"searchReq":{"range":0,"keyword":"","branchCode":""}}	{"code":0}
+get	職員リストを取得する	/api/staff/info/1/myTest	{"pageNo":1,"pageSize":10,"searchReq":{"range":0,"keyword":"","branchCode":""}}	{"message":"ok"}
+get	職員リストを取得する	/api/staff/info/1/myTest	{"pageNo":1,"pageSize":10,"searchReq":{"range":0,"keyword":"","branchCode":""}}	{"code":0,"message":"ok"}

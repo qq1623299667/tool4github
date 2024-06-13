@@ -1,2 +1,41 @@
-#### Simple unit testing  
-Simple automated testing can be achieved by configuring the environment and interfaces, which is convenient for quickly and simply writing unit test cases that are not so complicated, and ensuring the availability of the overall service level to the greatest extent in a short period of time  
+# 自用测试工具
+
+## 项目说明
+
+通过简单快速的配置，实现多环境多服务多接口多种分支的测试支持，保证代码逻辑正常执行。
+
+- **语言及版本**：Python 3.11.8
+- **环境依赖**：
+  - json
+  - logging
+  - os
+  - colorlog
+  - pandas
+  - requests
+
+## 配置说明
+
+### 配置环境
+
+配置一个文件叫 `env.txt1`，可以写多行，每行里面用 tab 键隔开，参考的就是“环境配置”这个文件。内容依次是：
+
+1. **编号**：数字类型，不能重复
+2. **环境名称**：程序运行后，会显示在控制台
+3. **环境名称2**：比如 `local:dev` 这种，英文和英文，用冒号隔开
+4. **环境的前缀**：比如 `http://localhost:8081/api`
+5. **必须的请求头**：用来设置请求头，cookie，token，国际化之类的
+6. **指定的请求内容**：可以自定义，指向对应的配置接口的文件名称
+
+### 配置接口
+
+这个文件就是上面配置环境的最后一个参数指定的，和配置环境一样，也是可以写多行和注释，参考的是“接口配置”这个文件。每一行也有很多字段，用 tab 键隔开。接口的话可以重复，通过不同的参数以实现尽可能覆盖所有的代码分支的效果。内容依次是：
+
+1. **请求方式**：post/get 这种
+2. **接口说明**：给接口标上备注，方便识别
+3. **接口 URL**
+4. **请求参数**：写个 json 的请求参数，如果没有，就用空的 json 就行了
+5. **断言**：用 json 表示，key 和 value 都要匹配才算成功，可以支持多个 key 和 value
+
+## 测试说明
+
+在配置好环境和接口列表的时候，执行 `easy_test.py` 的时候，会提示选择环境。通过选择对应的环境，实现对不同环境下的接口列表进行测试。如果在不同的参数下，返回结果都和断言的完全一致，就认为测试成功。如果不成功，会用黄色提示。
