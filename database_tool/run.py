@@ -247,19 +247,18 @@ def insert_data1(table_name):
     count_path = '$.mysql.datasource.count'
     count_value = get_value_from_yaml1(count_path)
 
-    try:
-        for i in range(count_value):
+    for i in range(count_value):
+        try:
             # 模拟插入 SQL
             sql = generate_sql(table_name, column_keys, column)
             # 执行多次插入操作
             cursor.execute(sql)
             # 提交事务
             conn.commit()
-        print("插入成功")
-    except Exception as e:
-        # 发生异常时回滚事务
-        conn.rollback()
-        print("插入失败:", e)
+        except Exception as e:
+            # 发生异常时回滚事务
+            conn.rollback()
+            print("插入失败:", e)
 
 
 def insert_data():
