@@ -8,6 +8,28 @@ from faker import Faker
 from datetime import datetime
 
 
+def get_value_from_yaml1(path):
+    yaml_file = 'insertTestData.yaml'
+    return get_value_from_yaml(yaml_file, path)
+
+
+def get_value_from_yaml(yaml_file, path):
+    # 读取 YAML 文件内容
+    with open(yaml_file, 'r') as file:
+        config = yaml.safe_load(file)
+
+    # 解析路径
+    keys = path.split('.')
+    value = config
+
+    # 遍历路径中的每个键
+    for key in keys:
+        if key.startswith('$'):
+            continue
+        value = value[key]
+
+    return value
+
 
 def testMysql():
     # 连接数据库
@@ -63,21 +85,31 @@ def testFake():
     print("Fake Number:", fake.random_number())
 
 
-def loadYML():
+def loadYML(yml_path):
     # 打开并读取YAML文件
-    with open('insertTestData.yaml', 'r') as file:
+    with open(yml_path, 'r') as file:
         data = yaml.safe_load(file)
 
     return data
 
 
 def connect_db():
+    host_path = '$.mysql.datasource.host'
+    username_path = '$.mysql.datasource.username'
+    password_path = '$.mysql.datasource.password'
+    db_path = '$.mysql.datasource.db'
+
+    host = get_value_from_yaml1(host_path)
+    user = get_value_from_yaml1(username_path)
+    password = get_value_from_yaml1(password_path)
+    database = get_value_from_yaml1(db_path)
+
     # 连接数据库
     conn = pymysql.connect(
-        host=yml['mysql']['datasource']['host'],
-        user=yml['mysql']['datasource']['username'],
-        password=yml['mysql']['datasource']['password'],
-        database=yml['mysql']['datasource']['db']
+        host=host,
+        user=user,
+        password=password,
+        database=database
     )
 
     # 创建游标对象
@@ -145,6 +177,7 @@ def replace_rand_int(input_string):
 
     return result_string
 
+
 def random_datetime_string():
     year = random.randint(1970, 2030)
     month = random.randint(1, 12)
@@ -155,6 +188,7 @@ def random_datetime_string():
     random_datetime = datetime(year, month, day, hour, minute, second)
     return random_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
+
 def do_enum(value):
     # 提取其中的选项部分
     options = value.split("[")[1].split("]")[0].split(",")
@@ -163,8 +197,8 @@ def do_enum(value):
     return random_option
 
 
-def generate_sql(column_keys, column):
-    result = f"INSERT INTO {yml['mysql']['datasource']['table']} ("  # 初始化结果字符串
+def generate_sql(table_name,column_keys, column):
+    result = f"INSERT INTO {table_name} ("  # 初始化结果字符串
 
     # 遍历字典的键值对，并累加到结果字符串中
     for key in column_keys:
@@ -183,13 +217,20 @@ def generate_sql(column_keys, column):
     return result
 
 
-def insert_data():
-    column = yml['mysql']['datasource']['column']
+def insert_data1(table_name):
+    table_name_yml = table_name+'.yml'
+    column = loadYML(table_name_yml)
+
+    # column = yml['mysql']['datasource']['column']
     column_keys = sorted(column.keys())
+
+    count_path = '$.mysql.datasource.count'
+    count_value = get_value_from_yaml1(count_path)
+
     try:
-        for i in range(yml['mysql']['datasource']['count']):
+        for i in range(count_value):
             # 模拟插入 SQL
-            sql = generate_sql(column_keys, column)
+            sql = generate_sql(table_name,column_keys, column)
             # 执行多次插入操作
             cursor.execute(sql)
         # 提交事务
@@ -199,6 +240,16 @@ def insert_data():
         # 发生异常时回滚事务
         conn.rollback()
         print("插入失败:", e)
+
+
+def insert_data():
+    # 获取所有的表
+    table_path = '$.mysql.datasource.table'
+    table_value = get_value_from_yaml1(table_path)
+    for table_name in table_value:
+        insert_data1(table_name)
+
+
 
 
 class KatakanaProvider:
@@ -239,7 +290,8 @@ class KatakanaProvider:
 
 
 if __name__ == '__main__':
-    yml = loadYML()
+    core_yml_path = 'insertTestData.yaml'
+    yml = loadYML(core_yml_path)
     conn, cursor = connect_db()
     insert_data()
     cursor.close()

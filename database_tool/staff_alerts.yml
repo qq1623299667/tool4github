@@ -1,0 +1,14 @@
+alert_id: rand_int
+alert_at: datetime
+corporation_id: rand_int
+large_category_id: rand_int
+large_category_name: rand_str
+small_category_id: rand_int
+small_category_name: rand_str
+alert_title: rand_str
+alert_detail: rand_str
+alert_link: rand_str
+ecm_request_id: rand_int
+request_id: rand_int
+created_at: datetime
+created_user_id: rand_int
