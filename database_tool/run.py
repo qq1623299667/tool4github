@@ -5,7 +5,7 @@ import string
 import pymysql
 import yaml
 from faker import Faker
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def get_value_from_yaml1(path):
@@ -122,9 +122,9 @@ def generate_value(value):
     if value.startswith("enum"):
         random_option = do_enum(value)
         return random_option
-    elif value.startswith("rand_int"):
+    elif value.startswith("int"):
         return replace_rand_int(value)
-    elif value.startswith("rand_str"):
+    elif value.startswith("varchar"):
         letters_and_digits = string.ascii_letters + string.digits
         str1 = ''.join(random.choice(letters_and_digits) for _ in range(random.randint(1, 10)))
         return f'"{str1}"'
@@ -147,8 +147,12 @@ def generate_value(value):
         fake = Faker()
         email = f'"{fake.email()}"'
         return email
-    elif value.startswith("datetime"):
+    elif value=="datetime":
         time1 = random_datetime_string()
+        time2 = f'"{time1}"'
+        return time2
+    elif value=="date":
+        time1 = random_date_string()
         time2 = f'"{time1}"'
         return time2
     else:
@@ -157,8 +161,8 @@ def generate_value(value):
 
 def replace_rand_int(input_string):
     # 定义匹配模式
-    pattern_full = r'rand_int\[(\d+),(\d+)\]'
-    pattern_simple = r'rand_int'
+    pattern_full = r'int\[(\d+),(\d+)\]'
+    pattern_simple = r'int'
 
     # 处理带有范围的模式 rand_int[min,max]
     def full_replacer(match):
@@ -187,7 +191,17 @@ def random_datetime_string():
     second = random.randint(0, 59)
     random_datetime = datetime(year, month, day, hour, minute, second)
     return random_datetime.strftime("%Y-%m-%d %H:%M:%S")
+def random_date_string():
+    # 定义日期范围
+    start_date = datetime(1970, 1, 1)
+    end_date = datetime(2030, 12, 31)
 
+    # 生成随机日期
+    random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+
+    # 将日期转换为字符串
+    random_date_str = random_date.strftime("%Y-%m-%d")
+    return random_date_str
 
 def do_enum(value):
     # 提取其中的选项部分
@@ -221,7 +235,6 @@ def insert_data1(table_name):
     table_name_yml = table_name+'.yml'
     column = loadYML(table_name_yml)
 
-    # column = yml['mysql']['datasource']['column']
     column_keys = sorted(column.keys())
 
     count_path = '$.mysql.datasource.count'

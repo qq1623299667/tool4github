@@ -1,9 +1,9 @@
-staff_id: rand_int[1,100]
-alert_id: rand_int
+staff_id: int[1,100]
+alert_id: int
 is_read: enum[0]
 large_category_id: enum[0,1,2,3]
 alert_at: datetime
 created_at: datetime
 updated_at: datetime
-created_user_id: rand_int[1,100]
-update_user_id: rand_int[1,100]
+created_user_id: int[1,100]
+update_user_id: int[1,100]
