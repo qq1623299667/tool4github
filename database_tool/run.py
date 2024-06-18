@@ -1,4 +1,5 @@
 import random
+import re
 import string
 
 import pymysql
@@ -90,7 +91,7 @@ def generate_value(value):
         random_option = do_enum(value)
         return random_option
     elif value.startswith("rand_int"):
-        return random.randint(0, 100000)
+        return replace_rand_int(value)
     elif value.startswith("rand_str"):
         letters_and_digits = string.ascii_letters + string.digits
         str1 = ''.join(random.choice(letters_and_digits) for _ in range(random.randint(1, 10)))
@@ -121,6 +122,28 @@ def generate_value(value):
     else:
         return None
 
+
+def replace_rand_int(input_string):
+    # 定义匹配模式
+    pattern_full = r'rand_int\[(\d+),(\d+)\]'
+    pattern_simple = r'rand_int'
+
+    # 处理带有范围的模式 rand_int[min,max]
+    def full_replacer(match):
+        min_val = int(match.group(1))
+        max_val = int(match.group(2))
+        return str(random.randint(min_val, max_val))
+
+    # 处理简单模式 rand_int
+    def simple_replacer(match):
+        return str(random.randint(0, 10000))
+
+    # 先处理带范围的模式
+    result_string = re.sub(pattern_full, full_replacer, input_string)
+    # 再处理简单模式
+    result_string = re.sub(pattern_simple, simple_replacer, result_string)
+
+    return result_string
 
 def random_datetime_string():
     year = random.randint(1970, 2030)
