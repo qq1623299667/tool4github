@@ -4,6 +4,8 @@ import string
 import pymysql
 import yaml
 from faker import Faker
+from datetime import datetime
+
 
 
 def testMysql():
@@ -112,9 +114,23 @@ def generate_value(value):
         fake = Faker()
         email = f'"{fake.email()}"'
         return email
+    elif value.startswith("datetime"):
+        time1 = random_datetime_string()
+        time2 = f'"{time1}"'
+        return time2
     else:
         return None
 
+
+def random_datetime_string():
+    year = random.randint(1970, 2030)
+    month = random.randint(1, 12)
+    day = random.randint(1, 28)
+    hour = random.randint(0, 23)
+    minute = random.randint(0, 59)
+    second = random.randint(0, 59)
+    random_datetime = datetime(year, month, day, hour, minute, second)
+    return random_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 def do_enum(value):
     # 提取其中的选项部分
