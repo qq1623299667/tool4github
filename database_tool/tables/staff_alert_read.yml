@@ -1,5 +1,5 @@
-staff_id: int[1,100]
-alert_id: int
+staff_id: int[1,10]
+alert_id: int[1,10]
 is_read: enum[0]
 large_category_id: enum[0,1,2,3]
 alert_at: datetime

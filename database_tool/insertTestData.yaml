@@ -5,8 +5,9 @@ mysql:
     username: root
     password: root
     db: gn_business_db
-    count: 10
-    table: ['staff_alert_read','staff_alerts']
+    count: 100
+    table: ['corporations']
+#    table: ['corporations','staff_alerts','staff_alert_read','name']
 #      role_code: enum['A1','A2','A3','B1','B2']
 #      staff_last_name: last_name
 #      staff_first_name: first_name

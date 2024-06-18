@@ -132,6 +132,10 @@ def generate_value(value):
         fake = Faker('zh_CN')
         first_name = f'"{fake.first_name()}"'
         return first_name
+    elif value == "username_zh":
+        fake = Faker('zh_CN')
+        first_name = f'"{fake.name()}"'
+        return first_name
     elif value.startswith("last_name"):
         fake = Faker('zh_CN')
         last_name = f'"{fake.last_name()}"'
@@ -147,11 +151,11 @@ def generate_value(value):
         fake = Faker()
         email = f'"{fake.email()}"'
         return email
-    elif value=="datetime":
+    elif value == "datetime":
         time1 = random_datetime_string()
         time2 = f'"{time1}"'
         return time2
-    elif value=="date":
+    elif value == "date":
         time1 = random_date_string()
         time2 = f'"{time1}"'
         return time2
@@ -191,6 +195,8 @@ def random_datetime_string():
     second = random.randint(0, 59)
     random_datetime = datetime(year, month, day, hour, minute, second)
     return random_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
+
 def random_date_string():
     # 定义日期范围
     start_date = datetime(1970, 1, 1)
@@ -203,6 +209,7 @@ def random_date_string():
     random_date_str = random_date.strftime("%Y-%m-%d")
     return random_date_str
 
+
 def do_enum(value):
     # 提取其中的选项部分
     options = value.split("[")[1].split("]")[0].split(",")
@@ -211,7 +218,7 @@ def do_enum(value):
     return random_option
 
 
-def generate_sql(table_name,column_keys, column):
+def generate_sql(table_name, column_keys, column):
     result = f"INSERT INTO {table_name} ("  # 初始化结果字符串
 
     # 遍历字典的键值对，并累加到结果字符串中
@@ -232,7 +239,7 @@ def generate_sql(table_name,column_keys, column):
 
 
 def insert_data1(table_name):
-    table_name_yml = table_name+'.yml'
+    table_name_yml = 'tables/' + table_name + '.yml'
     column = loadYML(table_name_yml)
 
     column_keys = sorted(column.keys())
@@ -243,11 +250,11 @@ def insert_data1(table_name):
     try:
         for i in range(count_value):
             # 模拟插入 SQL
-            sql = generate_sql(table_name,column_keys, column)
+            sql = generate_sql(table_name, column_keys, column)
             # 执行多次插入操作
             cursor.execute(sql)
-        # 提交事务
-        conn.commit()
+            # 提交事务
+            conn.commit()
         print("插入成功")
     except Exception as e:
         # 发生异常时回滚事务
@@ -261,8 +268,6 @@ def insert_data():
     table_value = get_value_from_yaml1(table_path)
     for table_name in table_value:
         insert_data1(table_name)
-
-
 
 
 class KatakanaProvider:

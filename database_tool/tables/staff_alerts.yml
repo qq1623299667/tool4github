@@ -1,4 +1,4 @@
-alert_id: int
+alert_id: int[1,10]
 alert_at: datetime
 corporation_id: int
 large_category_id: int[1,6]
